@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p>You have successfully bypassed the 404 void.</p>
+    
+    <div style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+        <h3>Survey Coming Soon</h3>
+        <p>This is where your 20 questions will live.</p>
+    </div>
+
+    <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+{% endblock %}
