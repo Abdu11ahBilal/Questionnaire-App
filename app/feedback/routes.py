@@ -9,7 +9,7 @@ from .questions import QUESTIONS
 from .repository import AnswerRepository
 from .schemas import FeedbackPageSchema 
 
-@feedback_bp.route('/')
+@feedback_bp.route('/index')
 @login_required
 def index():
     return render_template('feedback/index.html', user=current_user)
@@ -20,10 +20,15 @@ def page_one():
     page_questions = QUESTIONS[0:10]
 
     if request.method == 'GET':
-        return render_template('feedback/page1.html', questions=page_questions)
+        existing_answers = session.get('feedback_answers', {})
+        return render_template(
+            'feedback/page1.html', 
+            questions=page_questions,
+            existing_answers=existing_answers 
+        )
     
     try:
-        # Pydantic handles type conversion and required checks
+
         form_data = FeedbackPageSchema(answers=request.form.to_dict()) # type: ignore
     except ValidationError as e:
         logger.warning(f"User {current_user.id} - Page 1 Validation Error: {e.errors()}")
@@ -50,7 +55,12 @@ def page_two():
     page_questions = QUESTIONS[10:20]
 
     if request.method == 'GET':
-        return render_template('feedback/page2.html', questions=page_questions)
+        existing_answers = session.get('feedback_answers', {})
+        return render_template(
+            'feedback/page2.html', 
+            questions=page_questions,
+            existing_answers=existing_answers 
+        )
 
     try:
         form_data = FeedbackPageSchema(answers=request.form.to_dict()) # type: ignore
@@ -83,7 +93,7 @@ def submit():
         {
             "user_id": current_user.id,
             "submission_id": submission_id,
-            "question_id": q_id,  
+            "question_id": int(q_id),  
             "answer_value": val
         }
         for q_id, val in answers_dict.items()

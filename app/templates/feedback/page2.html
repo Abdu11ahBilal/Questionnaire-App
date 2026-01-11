@@ -1,33 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Feedback - Page 2 of 2</h1>
-    <p>Almost there! Just a few more questions.</p>
+<h1>Feedback - Page 2 of 2</h1>
+<p>Almost there! Just a few more questions.</p>
 
-    <form action="{{ url_for('feedback.page_two') }}" method="POST">
-        {% for q in questions %}
-            <div class="question-block" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
-                <p><strong>{{ q.id }}. {{ q.text }}</strong></p>
-                
-                <div class="options">
-                    {% for option in q.options %}
-                        <label style="display: block; margin-bottom: 0.5rem;">
-                            <input type="radio" 
-                                   name="{{ q.id }}" 
-                                   value="{{ option }}" 
-                                   required> 
-                            {{ option }}
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
+<form action="{{ url_for('feedback.page_two') }}" method="POST">
+    {% for q in questions %}
+    <div class="question-block" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+        <p><strong>{{ q.id }}. {{ q.text }}</strong></p>
 
-        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            {# This allows them to go back without losing Page 2's potential answers (via browser cache) #}
-            <a href="{{ url_for('feedback.page_one') }}" style="text-decoration: none; padding: 0.5rem 1rem; border: 1px solid #ccc; border-radius: 4px;">Back</a>
-            
-            <button type="submit" style="background-color: #28a745; color: white;">Submit Feedback</button>
+        <div class="options">
+            {% for option in q.options %}
+            <label style="display: block; margin-bottom: 0.5rem;">
+                <input type="radio" name="{{ q.id }}" value="{{ option }}" required {% if
+                    existing_answers.get(q.id|string)==option %} checked {% endif %}>
+                {{ option }}
+            </label>
+            {% endfor %}
         </div>
-    </form>
+    </div>
+    {% endfor %}
+
+    <div style="display: flex; margin-top: 2rem; justify-content: space-between;">
+        {# This allows them to go back without losing Page 2's potential answers (via browser cache) #}
+        <button type="button" onclick="window.location.href='/feedback/page/1'"
+            style="background:#6b7280;color:#fff;padding:0.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;">
+            Back
+        </button>
+
+        <button type="submit" style="background-color: #28a745; color: white;">Submit Feedback</button>
+    </div>
+</form>
 {% endblock %}

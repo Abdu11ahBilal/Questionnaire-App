@@ -6,15 +6,19 @@ VALID_QUESTION_IDS = {q['id'] for q in QUESTIONS}
 
 class FeedbackPageSchema(BaseModel):
 
-    answers: Dict[int, str]
+    answers: Dict[str, str]
 
     @field_validator('answers')
     @classmethod
-    def validate_content(cls, v: Dict[int, str]):
+    def validate_content(cls, v: Dict[str, str]):
         if not v:
             raise ValueError("At least one answer is required.")
             
-        for q_id, val in v.items():
+        for q_id_str, val in v.items():
+            try:
+                q_id = int(q_id_str)
+            except ValueError:
+                raise ValueError(f"Invalid question ID {q_id_str}")
             
             if q_id not in VALID_QUESTION_IDS:
                 raise ValueError(f"Question ID {q_id} is not part of this survey.")

@@ -2,12 +2,18 @@
 
 {% block content %}
     <h1>Welcome, {{ user.username }}!</h1>
-    <p>You have successfully bypassed the 404 void.</p>
-    
-    <div style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
-        <h3>Survey Coming Soon</h3>
-        <p>This is where your 20 questions will live.</p>
+
+    <p class="intro-text">
+        Click below to proceed to the feedback form.
+    </p>
+
+    <div class="cta-container">
+        <a href="{{ url_for('feedback.page_one') }}" class="cta-button">
+            Start Feedback Form
+        </a>
     </div>
 
-    <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+    <p class="logout-link">
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </p>
 {% endblock %}

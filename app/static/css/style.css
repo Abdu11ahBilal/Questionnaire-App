@@ -156,3 +156,36 @@ p a:hover {
     color: #991b1b;
     border: 1px solid #fca5a5;
 }
+
+
+/* ---------- Index / CTA ---------- */
+.intro-text {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.cta-container {
+    display: flex;
+    justify-content: center;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    background: #1e40af;
+}
+
+.logout-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}

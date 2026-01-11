@@ -1,29 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Feedback - Page 1 of 2</h1>
-    <p>Please answer the following questions to help us improve.</p>
+<h1>Feedback - Page 1 of 2</h1>
+<p>Please answer the following questions to help us improve.</p>
 
-    <form action="{{ url_for('feedback.page_one') }}" method="POST">
-        {% for q in questions %}
-            <div class="question-block" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
-                <p><strong>{{ q.id }}. {{ q.text }}</strong></p>
-                
-                <div class="options">
-                    {% for option in q.options %}
-                        <label style="display: block; margin-bottom: 0.5rem;">
-                            {# The 'name' must be the ID so the backend knows which question this is #}
-                            <input type="radio" 
-                                   name="{{ q.id }}" 
-                                   value="{{ option }}" 
-                                   required> 
-                            {{ option }}
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
+<form action="{{ url_for('feedback.page_one') }}" method="POST">
+    {% for q in questions %}
+    <div class="question-block" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+        <p><strong>{{ q.id }}. {{ q.text }}</strong></p>
 
-        <button type="submit">Next Page</button>
-    </form>
+        <div class="options">
+            {% for option in q.options %}
+            <label style="display: block; margin-bottom: 0.5rem;">
+                {# The 'name' must be the ID so the backend knows which question this is #}
+                <input type="radio" name="{{ q.id }}" value="{{ option }}" required {% if
+                    existing_answers.get(q.id|string)==option %} checked {% endif %}>
+                {{ option }}
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <button type="submit">Next Page</button>
+</form>
 {% endblock %}

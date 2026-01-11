@@ -1,6 +1,7 @@
 import sys
 from loguru import logger
-from flask import Flask
+from flask import Flask, redirect, url_for
+from flask_login import current_user
 from .config import Config
 from .extensions import db, login_manager
 
@@ -17,5 +18,8 @@ def create_app(config_class=Config):
 
     from .feedback import feedback_bp
     app.register_blueprint(feedback_bp)
+
+    from . import routes
+    routes.init_routes(app)
 
     return app

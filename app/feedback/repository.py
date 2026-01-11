@@ -23,5 +23,3 @@ class AnswerRepository:
             logger.critical(f"Database ROLLBACK: bulk_save_answers failed | error={str(e)}")
             
             raise e
-        finally:
-            db.session.remove()
