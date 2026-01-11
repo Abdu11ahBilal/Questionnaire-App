@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="text-align: center; margin-top: 3rem;">
+        <div style="font-size: 4rem;">✅</div>
+        <h1>Thank You!</h1>
+        <p>Your feedback has been successfully recorded.</p>
+        
+        <div style="margin-top: 2rem;">
+            <p>What would you like to do next?</p>
+            <a href="{{ url_for('feedback.index') }}" class="button">Go Home</a>
+            <span style="margin: 0 10px;">or</span>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </div>
+{% endblock %}
